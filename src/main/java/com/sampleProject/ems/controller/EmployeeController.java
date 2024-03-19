@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,5 +38,19 @@ public class EmployeeController {
 	public ResponseEntity<List<EmployeeDTO>> getAllEmployees(){
 		List<EmployeeDTO> emplist=empService.getAllEmployees();
 		return ResponseEntity.ok(emplist);
+	}
+	
+	@DeleteMapping("delete/{id}")
+	public ResponseEntity<EmployeeDTO> deletebyId(@PathVariable("id") Long empId) {
+		EmployeeDTO empDTO=empService.deleteEmployee(empId);
+		return ResponseEntity.ok(empDTO);
+	
+	}
+	
+	@PostMapping("/update/{id}")
+	public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable("id") Long empId,@RequestBody EmployeeDTO empDTO){
+		EmployeeDTO updatedEmpDTO=empService.updateEmployee(empId, empDTO);
+		return ResponseEntity.ok(updatedEmpDTO);
+		
 	}
 }
